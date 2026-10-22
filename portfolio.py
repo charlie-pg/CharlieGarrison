@@ -102,5 +102,101 @@ def main():
         print(f"Meets 6.5% objective: {'yes' if meets else 'no'}")
 
 
+def find_lowest_risk(assets, correlations, objective, reserve_minimum=0.03,
+                     reserve_flags=None):
+    from itertools import product
+
+    n = len(assets)
+    if reserve_flags is None:
+        reserve_flags = [i < 2 for i in range(n)]
+
+    validate_correlations_for_assets(correlations, n)
+    covariance = covariance_matrix(assets, correlations)
+    best = None
+
+    for allocation in product(range(0, 101, 5), repeat=n - 1):
+        final_weight = 100 - sum(allocation)
+        if final_weight < 0 or final_weight % 5 != 0:
+            continue
+
+        weights = [x / 100 for x in (*allocation, final_weight)]
+        ret = expected_return(weights, assets)
+        reserve = sum(w for w, flag in zip(weights, reserve_flags) if flag)
+
+        if ret < objective - 1e-12 or reserve < reserve_minimum - 1e-12:
+            continue
+
+        vol = portfolio_volatility(weights, covariance)
+
+        if best is None or vol < best["volatility"] - 1e-12:
+            best = {
+                "weights": weights,
+                "return": ret,
+                "volatility": vol,
+                "reserve": reserve,
+            }
+
+    return best
+
+
+def validate_correlations_for_assets(correlations, n):
+    if len(correlations) != n or any(len(row) != n for row in correlations):
+        raise ValueError("Correlation table has incorrect dimensions.")
+
+    for i in range(n):
+        for j in range(n):
+            value = correlations[i][j]
+            if not -1 <= value <= 1:
+                raise ValueError("Correlation must be between -1 and 1.")
+            if not math.isclose(value, correlations[j][i], abs_tol=1e-10):
+                raise ValueError("Correlation table must be symmetric.")
+        if not math.isclose(correlations[i][i], 1, abs_tol=1e-10):
+            raise ValueError("Diagonal correlations must equal 1.")
+
+
+def estimate_from_csv(csv_file, last_36=False):
+    import csv
+    import statistics
+
+    rows = list(csv.reader(csv_file))
+    tickers = rows[0][1:]
+    prices = [[float(value) for value in row[1:]] for row in rows[1:] if row]
+
+    if last_36:
+        prices = prices[-37:]
+
+    if len(prices) < 3:
+        raise ValueError("Not enough monthly prices.")
+
+    monthly = [
+        [prices[t][i] / prices[t - 1][i] - 1 for i in range(len(tickers))]
+        for t in range(1, len(prices))
+    ]
+
+    columns = [[row[i] for row in monthly] for i in range(len(tickers))]
+    assets = [
+        (ticker, statistics.mean(col) * 12,
+         statistics.stdev(col) * math.sqrt(12))
+        for ticker, col in zip(tickers, columns)
+    ]
+
+    correlations = []
+    for a in columns:
+        row = []
+        for b in columns:
+            mean_a, mean_b = statistics.mean(a), statistics.mean(b)
+            numerator = sum((x - mean_a) * (y - mean_b) for x, y in zip(a, b))
+            denominator = math.sqrt(
+                sum((x - mean_a) ** 2 for x in a)
+                * sum((y - mean_b) ** 2 for y in b)
+            )
+            row.append(numerator / denominator if denominator else 0.0)
+        correlations.append(row)
+
+    for i in range(len(tickers)):
+        correlations[i][i] = 1.0
+
+    return assets, correlations
+
 if __name__ == "__main__":
     main()
