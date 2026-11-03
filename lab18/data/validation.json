@@ -1,0 +1,62 @@
+[
+  {
+    "test": "COST professor reference",
+    "status": "pass",
+    "comparison": {
+      "2022": {
+        "expected_millions": 3501,
+        "actual_millions": 3501.0,
+        "matches": true
+      },
+      "2023": {
+        "expected_millions": 6745,
+        "actual_millions": 6745.0,
+        "matches": true
+      },
+      "2024": {
+        "expected_millions": 6629,
+        "actual_millions": 6629.0,
+        "matches": true
+      },
+      "2025": {
+        "expected_millions": 7837,
+        "actual_millions": 7837.0,
+        "matches": true
+      },
+      "2026": {
+        "expected_millions": 9382,
+        "actual_millions": 9382.0,
+        "matches": true
+      }
+    },
+    "checks": {
+      "ROE at least 15% every year": "pass",
+      "Positive owner earnings every year": "pass",
+      "Owner earnings growth, first to last year": "pass"
+    }
+  },
+  {
+    "test": "Unsupported 40.0% ROE injection",
+    "status": "pass",
+    "baseline_warnings": [],
+    "injected_warnings": [
+      "40.0%"
+    ]
+  },
+  {
+    "test": "JPM missing capital spending",
+    "status": "pass",
+    "checks": {
+      "ROE at least 15% every year": "fail",
+      "Positive owner earnings every year": "not known",
+      "Owner earnings growth, first to last year": "not known"
+    },
+    "capital_spending": [
+      "not found",
+      "not found",
+      "not found",
+      "not found",
+      "not found"
+    ]
+  }
+]
