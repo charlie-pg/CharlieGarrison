@@ -1,0 +1,345 @@
+{
+  "ticker": "JPM",
+  "entity": "JPMORGAN CHASE & CO",
+  "as_of": "2026-11-03",
+  "rows": [
+    {
+      "fiscal_year_end": "2021-12-31",
+      "sources": {
+        "revenue": {
+          "value": 121649000000,
+          "tag": "Revenues",
+          "filed": "2024-02-16",
+          "accession": "0000019617-24-000225",
+          "start": "2021-01-01",
+          "end": "2021-12-31"
+        },
+        "net_income": {
+          "value": 48334000000,
+          "tag": "NetIncomeLoss",
+          "filed": "2024-02-16",
+          "accession": "0000019617-24-000225",
+          "start": "2021-01-01",
+          "end": "2021-12-31"
+        },
+        "operating_cash_flow": {
+          "value": 78084000000,
+          "tag": "NetCashProvidedByUsedInOperatingActivities",
+          "filed": "2024-02-16",
+          "accession": "0000019617-24-000225",
+          "start": "2021-01-01",
+          "end": "2021-12-31"
+        },
+        "capital_spending": {
+          "value": "not known",
+          "tag": "not known"
+        },
+        "equity": {
+          "value": 294127000000,
+          "tag": "StockholdersEquity",
+          "filed": "2024-02-16",
+          "accession": "0000019617-24-000225",
+          "start": null,
+          "end": "2021-12-31"
+        },
+        "liabilities": {
+          "value": 3449440000000,
+          "tag": "Liabilities",
+          "filed": "2023-02-21",
+          "accession": "0000019617-23-000231",
+          "start": null,
+          "end": "2021-12-31"
+        },
+        "research_and_development": {
+          "value": "not known",
+          "tag": "not known"
+        }
+      },
+      "revenue": 121649000000,
+      "net_income": 48334000000,
+      "operating_cash_flow": 78084000000,
+      "capital_spending": "not known",
+      "equity": 294127000000,
+      "liabilities": 3449440000000,
+      "research_and_development": "not known",
+      "roe": 0.16433037429409744,
+      "owner_earnings": "not known",
+      "revenue_growth": "not known",
+      "rd_to_revenue": "not known",
+      "liabilities_to_equity": 11.727723058406742
+    },
+    {
+      "fiscal_year_end": "2022-12-31",
+      "sources": {
+        "revenue": {
+          "value": 128695000000,
+          "tag": "Revenues",
+          "filed": "2025-02-14",
+          "accession": "0000019617-25-000270",
+          "start": "2022-01-01",
+          "end": "2022-12-31"
+        },
+        "net_income": {
+          "value": 37676000000,
+          "tag": "NetIncomeLoss",
+          "filed": "2025-02-14",
+          "accession": "0000019617-25-000270",
+          "start": "2022-01-01",
+          "end": "2022-12-31"
+        },
+        "operating_cash_flow": {
+          "value": 107119000000,
+          "tag": "NetCashProvidedByUsedInOperatingActivities",
+          "filed": "2025-02-14",
+          "accession": "0000019617-25-000270",
+          "start": "2022-01-01",
+          "end": "2022-12-31"
+        },
+        "capital_spending": {
+          "value": "not known",
+          "tag": "not known"
+        },
+        "equity": {
+          "value": 292332000000,
+          "tag": "StockholdersEquity",
+          "filed": "2025-02-14",
+          "accession": "0000019617-25-000270",
+          "start": null,
+          "end": "2022-12-31"
+        },
+        "liabilities": {
+          "value": 3373411000000,
+          "tag": "Liabilities",
+          "filed": "2024-02-16",
+          "accession": "0000019617-24-000225",
+          "start": null,
+          "end": "2022-12-31"
+        },
+        "research_and_development": {
+          "value": "not known",
+          "tag": "not known"
+        }
+      },
+      "revenue": 128695000000,
+      "net_income": 37676000000,
+      "operating_cash_flow": 107119000000,
+      "capital_spending": "not known",
+      "equity": 292332000000,
+      "liabilities": 3373411000000,
+      "research_and_development": "not known",
+      "roe": 0.12888086148625535,
+      "owner_earnings": "not known",
+      "revenue_growth": 0.05792073917582563,
+      "rd_to_revenue": "not known",
+      "liabilities_to_equity": 11.539656965368144
+    },
+    {
+      "fiscal_year_end": "2023-12-31",
+      "sources": {
+        "revenue": {
+          "value": 158104000000,
+          "tag": "Revenues",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "net_income": {
+          "value": 49552000000,
+          "tag": "NetIncomeLoss",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "operating_cash_flow": {
+          "value": 12974000000,
+          "tag": "NetCashProvidedByUsedInOperatingActivities",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "capital_spending": {
+          "value": "not known",
+          "tag": "not known"
+        },
+        "equity": {
+          "value": 327878000000,
+          "tag": "StockholdersEquity",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": null,
+          "end": "2023-12-31"
+        },
+        "liabilities": {
+          "value": 3547515000000,
+          "tag": "Liabilities",
+          "filed": "2025-02-14",
+          "accession": "0000019617-25-000270",
+          "start": null,
+          "end": "2023-12-31"
+        },
+        "research_and_development": {
+          "value": "not known",
+          "tag": "not known"
+        }
+      },
+      "revenue": 158104000000,
+      "net_income": 49552000000,
+      "operating_cash_flow": 12974000000,
+      "capital_spending": "not known",
+      "equity": 327878000000,
+      "liabilities": 3547515000000,
+      "research_and_development": "not known",
+      "roe": 0.15112938349020064,
+      "owner_earnings": "not known",
+      "revenue_growth": 0.22851703640390064,
+      "rd_to_revenue": "not known",
+      "liabilities_to_equity": 10.819618882633174
+    },
+    {
+      "fiscal_year_end": "2024-12-31",
+      "sources": {
+        "revenue": {
+          "value": 177556000000,
+          "tag": "Revenues",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "net_income": {
+          "value": 58471000000,
+          "tag": "NetIncomeLoss",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "operating_cash_flow": {
+          "value": -42012000000,
+          "tag": "NetCashProvidedByUsedInOperatingActivities",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "capital_spending": {
+          "value": "not known",
+          "tag": "not known"
+        },
+        "equity": {
+          "value": 344758000000,
+          "tag": "StockholdersEquity",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": null,
+          "end": "2024-12-31"
+        },
+        "liabilities": {
+          "value": 3658056000000,
+          "tag": "Liabilities",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": null,
+          "end": "2024-12-31"
+        },
+        "research_and_development": {
+          "value": "not known",
+          "tag": "not known"
+        }
+      },
+      "revenue": 177556000000,
+      "net_income": 58471000000,
+      "operating_cash_flow": -42012000000,
+      "capital_spending": "not known",
+      "equity": 344758000000,
+      "liabilities": 3658056000000,
+      "research_and_development": "not known",
+      "roe": 0.16960012530528662,
+      "owner_earnings": "not known",
+      "revenue_growth": 0.12303294034306522,
+      "rd_to_revenue": "not known",
+      "liabilities_to_equity": 10.610503599626405
+    },
+    {
+      "fiscal_year_end": "2025-12-31",
+      "sources": {
+        "revenue": {
+          "value": 182447000000,
+          "tag": "Revenues",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "net_income": {
+          "value": 57048000000,
+          "tag": "NetIncomeLoss",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "operating_cash_flow": {
+          "value": -147782000000,
+          "tag": "NetCashProvidedByUsedInOperatingActivities",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "capital_spending": {
+          "value": "not known",
+          "tag": "not known"
+        },
+        "equity": {
+          "value": 362438000000,
+          "tag": "StockholdersEquity",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": null,
+          "end": "2025-12-31"
+        },
+        "liabilities": {
+          "value": 4062462000000,
+          "tag": "Liabilities",
+          "filed": "2026-02-13",
+          "accession": "0001628280-26-008131",
+          "start": null,
+          "end": "2025-12-31"
+        },
+        "research_and_development": {
+          "value": "not known",
+          "tag": "not known"
+        }
+      },
+      "revenue": 182447000000,
+      "net_income": 57048000000,
+      "operating_cash_flow": -147782000000,
+      "capital_spending": "not known",
+      "equity": 362438000000,
+      "liabilities": 4062462000000,
+      "research_and_development": "not known",
+      "roe": 0.1574007140531622,
+      "owner_earnings": "not known",
+      "revenue_growth": 0.027546238933068956,
+      "rd_to_revenue": "not known",
+      "liabilities_to_equity": 11.208708799849905
+    }
+  ],
+  "checks": {
+    "ROE at least 15% every year": "fail",
+    "Positive owner earnings every year": "not known",
+    "Owner earnings growth, first to last year": "not known"
+  },
+  "revenue_cagr": 0.10664173760791007,
+  "owner_earnings_growth": "not known",
+  "downloaded_at": "2026-11-03T22:22:09.663296+00:00",
+  "urls": {
+    "facts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+    "submissions": "https://data.sec.gov/submissions/CIK0000019617.json"
+  },
+  "data_origin": "Recalculated preserved lab18/data/JPM_companyfacts.json; not a new download"
+}

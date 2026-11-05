@@ -1,0 +1,14 @@
+{
+  "fund": "VT — Vanguard Total World Stock ETF",
+  "holdings_date": "2026-09-30",
+  "accessed_date": "2026-11-05",
+  "source": "https://stockanalysis.com/etf/vt/holdings/",
+  "source_type": "Secondary holdings table; provider identified on page as Finnhub",
+  "largest_company": "NVIDIA Corporation",
+  "ticker": "NVDA",
+  "rank": 1,
+  "displayed_weight_percent": 4.54,
+  "next_two_displayed_holdings": ["Apple 4.11%", "Microsoft 3.25%"],
+  "issuer_page_attempted": "https://advisors.vanguard.com/investments/products/vt/vanguard-total-world-stock-etf",
+  "issuer_page_limitation": "No readable holdings returned; ranking was verified against the dated secondary table, not assumed."
+}

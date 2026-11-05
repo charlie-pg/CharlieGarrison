@@ -1,0 +1,83 @@
+{
+  "unit_tests": {
+    "run": 16,
+    "passed": true
+  },
+  "cost_default": {
+    "Buffett": {
+      "ROE at least 15% every year": "pass",
+      "Positive owner earnings every year": "pass",
+      "Owner earnings growth, first to last year": "pass"
+    },
+    "Cathie Wood": {
+      "Annualized revenue growth at least 15%": "fail",
+      "Latest R&D/revenue at least 5%": "not known"
+    },
+    "Burry": {
+      "Operating cash flow at least net income every year": "pass",
+      "Latest liabilities no more than twice equity": "pass"
+    }
+  },
+  "cost_five_percent_probe": {
+    "Buffett": {
+      "ROE at least 15% every year": "pass",
+      "Positive owner earnings every year": "pass",
+      "Owner earnings growth, first to last year": "pass"
+    },
+    "Cathie Wood": {
+      "Annualized revenue growth at least 5%": "pass",
+      "Latest R&D/revenue at least 5%": "not known"
+    },
+    "Burry": {
+      "Operating cash flow at least net income every year": "pass",
+      "Latest liabilities no more than twice equity": "pass"
+    }
+  },
+  "retained_growth_threshold": 0.15,
+  "revenue_cagr": 0.07505668815961197,
+  "liabilities_to_equity": [
+    2.1082743920162774,
+    1.7533721765504031,
+    1.9561849123698247,
+    1.6436359895761898,
+    1.4870820880931765
+  ],
+  "memo_audits": {
+    "COST_buffett.md": {
+      "baseline_warnings": [],
+      "injected_warnings": [
+        "40.0%"
+      ]
+    },
+    "COST_burry.md": {
+      "baseline_warnings": [],
+      "injected_warnings": [
+        "40.0%"
+      ]
+    },
+    "COST_cathie_wood.md": {
+      "baseline_warnings": [],
+      "injected_warnings": [
+        "40.0%"
+      ]
+    },
+    "NVDA_buffett.md": {
+      "baseline_warnings": [],
+      "injected_warnings": [
+        "40.0%"
+      ]
+    },
+    "NVDA_burry.md": {
+      "baseline_warnings": [],
+      "injected_warnings": [
+        "40.0%"
+      ]
+    },
+    "NVDA_cathie_wood.md": {
+      "baseline_warnings": [],
+      "injected_warnings": [
+        "40.0%"
+      ]
+    }
+  }
+}
