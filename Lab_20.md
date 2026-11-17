@@ -26,15 +26,26 @@ The partner should start from GitHub and use the README without coaching. Record
 - **My prediction:** The portfolio's expected return will decrease because a larger share must be held in lower-return reserve assets.
 - **Expected decision effect:** My current **PILOT** recommendation will likely remain **PILOT**, but I expect a lower projected return.
 
-The changed-input experiment and its measured results are pending. The commit containing this prediction and its GitHub history provide the pre-test record.
+The prediction was committed and pushed before the experiment in [commit 2d6b05c](https://github.com/charlie-pg/CharlieGarrison/commit/2d6b05c3ea497b39a9f7d5b9d37905ca35feb2fe).
 
-## Changed-input result — pending, after the push
+## Changed-input result — measured after the push
 
-- Test date and commit: **pending**
-- Before result: **pending**
-- After result: **pending**
-- Comparison with prediction and explanation: **pending**
-- Evidence or reproducible steps: **pending**
+**Test date:** November 17, 2026. Tested the portfolio code and `prices.csv` at commit `2d6b05c`, after the prediction was pushed. The full historical price window, 6.5% minimum expected return, BIL and IEF as reserve eligible, and 5-percentage-point allocation grid were held constant. The calculation uses the app's rounding of displayed asset return inputs.
+
+| Result | Before: 3% reserve minimum | After: 5% reserve minimum |
+|---|---:|---:|
+| BIL / IEF / LQD / VT | 60% / 0% / 0% / 40% | 60% / 0% / 0% / 40% |
+| Expected return | 6.91% | 6.91% |
+| Volatility | 6.04% | 6.04% |
+| Reserve-eligible allocation | 60% | 60% |
+| App's tested return and reserve requirements | Meets both | Meets both |
+| Retirement client mandate | Not established | Not established |
+
+The predicted decrease in expected return **did not occur**. The original optimum already held 60% in reserve-eligible BIL, so neither minimum was binding. These are model estimates, not realized returns. Meeting the app's two tested requirements is not a full retirement-mandate verdict: the app does not specifically check the 5% cash rule or the 10% single-company limit, including fund holdings.
+
+**Decision effect:** Retain **PILOT, not adopt**. This test gives no reason to change the recommendation, and the client mandate and other checks remain unresolved. The measured full-window result also differs from Lab 15's recorded 30% BIL / 5% LQD / 65% VT, 6.50% return and 10.12% volatility; the cause has not been established and should be investigated before adoption.
+
+To reproduce in the app, upload `prices.csv`, leave the 36-month toggle off, select BIL and IEF as reserve eligible, keep the 6.5% return minimum and all asset estimates unchanged, and compare results with the reserve minimum at 3% and 5%. The experiment above called the same `estimate_from_csv` and `find_lowest_risk` functions with those settings.
 
 ## Fix or documented clean run — pending
 
@@ -42,6 +53,6 @@ The changed-input experiment and its measured results are pending. The commit co
 - Fix and retest evidence, if needed: **pending**
 - Remaining limitations: **pending**
 
-## Final decision — pending
+## Decision and reversal condition
 
-One line: **[decision]**, and reverse it if **[specific observable condition]**.
+**PILOT, not adopt:** Do not adopt until the retirement mandate is enforced, the Lab 15 discrepancy is reconciled, and the results pass independent validation.
