@@ -6,16 +6,11 @@
 
 The recorded Lab 15 decision is **pilot, not adopt**: the historical allocation was stable across the two windows, but estimated volatility changed, and the return estimates, data quality and mandate needed further review. The recorded comparison used Meridian training thresholds, not a confirmed Project 2 mandate. The app does not specifically enforce the client's 5% cash minimum or 10% single-company limit; risk tolerance remains unconfirmed. See [Lab 13](Lab_13.md), [Lab 15](Lab_15.md), and the README.
 
-## Partner cold run — pending
+## Partner run — successful with assistance
 
-The partner should start from GitHub and use the README without coaching. Record what happened, including any friction or errors.
+I sent my GitHub repository link to **Max Puntill**, and he successfully ran the Project 2 app. I gave him a little help at the beginning; otherwise, everything ran smoothly. This was a successful assisted run, not a fully independent cold run.
 
-- Date and partner: **pending**
-- Repository link and commit tested: **pending**
-- Starting environment and steps attempted: **pending**
-- Result and observed output: **pending**
-- Confusing instructions, failures or questions: **pending**
-- Partner's note or link to evidence: **pending**
+The date, commit tested, environment, commands, elapsed time and specifics of the initial help were not recorded. This run does not establish that a stranger can complete the process without assistance.
 
 ## Locked Changed-Input Record — personal prediction before the experiment
 
