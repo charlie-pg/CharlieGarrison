@@ -1,124 +1,131 @@
-import io
+"""Project 2 Streamlit entry point, extended from the Lab 15 app."""
+import json
+
 import streamlit as st
 
-from portfolio import (
-    ASSETS,
-    CORRELATIONS,
-    find_lowest_risk,
-    estimate_from_csv,
+from project2 import (
+    AS_OF, NAMES, ROOT, RETURN_HURDLE, SIGNAL_MAX_AGE, VOLATILITY_LIMIT,
+    allocation_stop, compare, load_prices,
+    read_signal, stress_cases, validate_holdings,
 )
 
-st.set_page_config(page_title="Portfolio Stability Decision", layout="wide")
-st.title("Lab 15 — Portfolio Stability Decision")
-st.caption("Built with AI help, a learning demonstration, not investment advice.")
+st.set_page_config(page_title="Project 2 Portfolio Decision", layout="wide")
+st.title("Retirement Portfolio Decision")
+st.caption("Built with OpenAI Codex assistance. Educational analysis, not investment advice.")
 
-st.sidebar.header("Mandate")
-objective_pct = st.sidebar.number_input(
-    "Minimum expected return (%)", value=6.5, step=0.1
-)
-reserve_pct = st.sidebar.number_input(
-    "Minimum reserve-eligible weight (%)", value=3.0, min_value=0.0, max_value=100.0
-)
-uploaded = st.sidebar.file_uploader("Upload prices.csv", type="csv")
-last_36 = st.sidebar.toggle("Use only last 36 monthly returns", value=False)
-
-if uploaded is None:
-    base_assets = list(ASSETS)
-    base_corr = [row[:] for row in CORRELATIONS]
-    assets = list(base_assets)
-    correlations = [row[:] for row in base_corr]
-    st.info("Using Meridian training inputs from Lab 14.")
-else:
-    try:
-        base_assets, base_corr = estimate_from_csv(
-            io.StringIO(uploaded.getvalue().decode("utf-8-sig")),
-            last_36=False,
-        )
-        assets, correlations = estimate_from_csv(
-            io.StringIO(uploaded.getvalue().decode("utf-8-sig")),
-            last_36=last_36,
-        )
-        st.info("Using historical price estimates from the uploaded CSV.")
-    except Exception as error:
-        st.error(f"Could not read prices.csv: {error}")
-        st.stop()
-
-st.subheader("Asset return estimates and reserve eligibility")
-edited_assets = []
-reserve_flags = []
-
-for i, (name, ret, vol) in enumerate(assets):
-    col1, col2, col3 = st.columns([3, 2, 2])
-    with col1:
-        st.write(name)
-    with col2:
-        edited_return = st.number_input(
-            f"{name} estimated return (%)",
-            value=float(round(ret * 100, 4)),
-            step=0.1,
-            key=f"return_{i}",
-        )
-    with col3:
-        eligible = st.checkbox(
-            f"Reserve eligible: {name}",
-            value=(uploaded is None and i < 2),
-            key=f"reserve_{i}",
-        )
-    edited_assets.append((name, edited_return / 100, vol))
-    reserve_flags.append(eligible)
-
-def display_result(result, asset_names):
-    if result is None:
-        st.warning("No mix meets the objective.")
-        return
-
-    st.metric("Expected return", f"{result['return'] * 100:.2f}%")
-    st.metric("Volatility", f"{result['volatility'] * 100:.2f}%")
-    st.metric("Reserve eligible", f"{result['reserve'] * 100:.2f}%")
-
-    for name, weight in zip(asset_names, result["weights"]):
-        st.write(f"**{name}:** {weight * 100:.0f}%")
+with st.sidebar:
+    st.header("Portfolio policy")
+    st.subheader("Client requirements")
+    st.markdown("- Long only, with no borrowing or short selling\n"
+                "- **5% minimum explicit cash** (BIL excluded)\n"
+                "- **10% maximum single-company exposure**")
+    st.subheader("Strategic benchmark")
+    st.write("60% VT / 40% BIL, rebalanced monthly.")
+    st.subheader("Illustrative analyst assumptions")
+    st.markdown(f"- **{VOLATILITY_LIMIT:.0%} annualized volatility limit** for the portfolio analysis\n"
+                f"- **{RETURN_HURDLE:.1%} first-year net expected-return hurdle** for the constrained search")
+    st.caption("Lab 13 supplies no numerical risk limit or return hurdle.")
+    upload = st.file_uploader("Optional as-of issuer holdings JSON", type="json")
+    st.caption("See README for the holdings schema and source requirements.")
 
 try:
-    current = find_lowest_risk(
-        edited_assets,
-        correlations,
-        objective_pct / 100,
-        reserve_pct / 100,
-        reserve_flags,
-    )
-
-    baseline_flags = [
-        i < 2 for i in range(len(base_assets))
-    ] if uploaded is None else reserve_flags
-
-    baseline = find_lowest_risk(
-        base_assets,
-        base_corr,
-        objective_pct / 100,
-        reserve_pct / 100,
-        baseline_flags,
-    )
-except Exception as error:
-    st.error(f"Portfolio calculation error: {error}")
+    text = load_prices((ROOT / "prices.csv").read_text())
+    holdings = validate_holdings(json.loads(upload.getvalue()), AS_OF) if upload else {}
+    portfolios, benchmark = compare(text, holdings)
+except (OSError, ValueError, TypeError, AttributeError, KeyError) as error:
+    st.error(f"Allocation stopped: invalid input. {error}")
     st.stop()
 
-st.divider()
-left, right = st.columns(2)
-
-with left:
-    st.subheader("Current inputs")
-    display_result(current, [asset[0] for asset in edited_assets])
-
-with right:
-    st.subheader("As-loaded baseline")
-    display_result(baseline, [asset[0] for asset in base_assets])
-
-if current is not None and baseline is not None:
-    largest_change = max(
-        abs(a - b) * 100
-        for a, b in zip(current["weights"], baseline["weights"])
-    )
-    st.metric("Largest weight change", f"{largest_change:.0f} percentage points")
+if holdings:
+    st.subheader("Uploaded holdings sources")
+    st.table([{"Fund": fund, "Holdings date": data["holdings_date"],
+               "Available on": data["available_on"], "Source": data["source"]}
+              for fund, data in holdings.items()])
 else:
-    st.write("Largest weight change: unavailable because one mix is infeasible.")
+    st.info("No eligible issuer snapshots loaded. The Lab 19 VT example is partial and was accessed after the decision date.")
+st.subheader("Portfolio comparison")
+summary = []
+for name, result in portfolios.items():
+    summary.append({
+        "Portfolio": name,
+        "Mandate verdict": result["verdict"] if result else "FAIL",
+        "Explicit cash": f"{result['weights'][-1]:.1%}" if result else "—",
+        "Expected gross return": f"{result['gross']:.2%}" if result else "—",
+        "Expected first-year net return": f"{result['net']:.2%}" if result else "—",
+        "Annualized volatility": f"{result['vol']:.2%}" if result else "—",
+    })
+st.dataframe(summary, hide_index=True, width="stretch")
+st.caption("Open a portfolio below for its allocation and the evidence behind each verdict.")
+for name, result in portfolios.items():
+    with st.expander(f"{name} · {result['verdict'] if result else 'FAIL'}"):
+        if result is None:
+            st.error("No candidate satisfies the search constraints.")
+            continue
+        st.write(" · ".join(f"{ticker} {weight:.1%}" for ticker, weight in zip(NAMES, result["weights"])))
+        st.table([{"Rule": rule, "Status": status, "Evidence": reason}
+                  for rule, (status, reason) in result["checks"].items()])
+st.caption(f"Strategic benchmark · 60% VT / 40% BIL, rebalanced monthly · "
+           f"Historical annualized gross return {benchmark['gross']:.2%} · "
+           f"Annualized volatility {benchmark['vol']:.2%}")
+
+st.subheader("Point-in-time Treasury signal")
+signal_age = None
+try:
+    observed, yield_percent, signal_age = read_signal((ROOT / "data/dgs10-2026-09-30.csv").read_text(), AS_OF)
+    st.metric(f"10-year Treasury yield known on {AS_OF}", f"{yield_percent:.2f}%")
+    st.write(f"Latest published observation {observed}. Observation age {signal_age} calendar day(s).")
+except (OSError, ValueError, TypeError, KeyError) as error:
+    st.warning(f"Vintage unavailable: {error}")
+with st.expander("DGS10 data card"):
+    st.write("Board of Governors 10-year Treasury constant maturity yield, via FRED and ALFRED. "
+             "Business daily, percent per year, not seasonally adjusted. The saved September 30 vintage "
+             "defines what was available; current FRED values can include later observations or revisions. "
+             "Monitor IEF duration risk. This yield does not forecast ETF returns or change weights.")
+    st.write(f"Pilot freshness rule: no more than {SIGNAL_MAX_AGE} calendar days since the latest observation.")
+    st.markdown("[FRED series](https://fred.stlouisfed.org/series/DGS10) · "
+                "[Saved vintage source](https://alfred.stlouisfed.org/graph/alfredgraph.csv?id=DGS10&vintage_date=2026-09-30&cosd=2026-09-01&coed=2026-09-30)")
+
+st.subheader("Stress testing")
+cases = stress_cases(text, holdings)
+reference, _ = cases["Reference"]
+stress_summary = []
+stress_details = []
+benchmark_rows = []
+for label, (result, yardstick) in cases.items():
+    stop = allocation_stop(result, signal_age)
+    largest_change = "—"
+    if result is not None and reference is not None:
+        change = max(abs(a - b) for a, b in zip(reference["weights"], result["weights"]))
+        largest_change = f"{change * 100:.0f} pp"
+    stress_summary.append({
+        "Scenario": label,
+        "Expected first-year net return": f"{result['net']:.2%}" if result else "—",
+        "Annualized volatility": f"{result['vol']:.2%}" if result else "—",
+        "Largest allocation change": largest_change,
+        "Mandate verdict": result["verdict"] if result else "FAIL",
+    })
+    detail = {"Scenario": label}
+    if result is not None:
+        detail.update({name: f"{weight:.0%}" for name, weight in zip(NAMES, result["weights"])})
+    detail["Decision gate"] = stop or "Scenario cleared"
+    stress_details.append(detail)
+    benchmark_rows.append({
+        "Scenario": label,
+        "Benchmark gross": f"{yardstick['gross']:.2%}",
+        "Benchmark volatility": f"{yardstick['vol']:.2%}",
+    })
+st.dataframe(stress_summary, hide_index=True, width="stretch")
+st.caption("Allocation changes are measured against the reference portfolio. Trading costs apply "
+           "once to one-way turnover from an all-cash starting account.")
+with st.expander("Scenario allocations and decision gates"):
+    st.dataframe(stress_details, hide_index=True, width="stretch")
+with st.expander("Strategic benchmark by scenario"):
+    st.dataframe(benchmark_rows, hide_index=True, width="stretch")
+    st.caption("Historical annualized statistics use each scenario’s window and monthly rebalancing, "
+               "before hypothetical shocks or costs.")
+
+st.info("PILOT ONLY · Paper account · 0% funded.")
+if any(allocation_stop(result, signal_age) for result, _ in cases.values()):
+    st.error("Stop deployment while any required stress or verification gate is open.")
+else:
+    st.write("Modeled gates cleared. Confirm client risk tolerance and obtain committee approval before any funding.")
